@@ -1,0 +1,133 @@
+import os
+import datetime
+import pyttsx3
+import webbrowser
+import google.generativeai as genai
+
+
+
+def gemini(command):
+    genai.configure(api_key="Your_Google_Genrative_AI_API_Key")
+
+    generation_config = {
+      "temperature": 0.9,
+      "top_p": 1,
+      "top_k": 1,
+      "max_output_tokens": 30720,
+    }
+
+    safety_settings = [
+      {
+        "category": "HARM_CATEGORY_HARASSMENT",
+        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+      },
+      {
+        "category": "HARM_CATEGORY_HATE_SPEECH",
+        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+      },
+      {
+        "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+      },
+      {
+        "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+        "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+      },
+    ]
+
+    model = genai.GenerativeModel(model_name="gemini-1.0-pro", generation_config=generation_config,
+                                  safety_settings=safety_settings)
+
+    response = model.generate_content(command,  stream=True)
+
+    for chunk in response:
+        print(chunk.text)
+        print("_"*80)
+
+    folder_path = "Gemini_Chats"
+    file_name = datetime.datetime.now().strftime('Chat - %d-%m-%Y__%H-%M-%S') + ".txt"
+    file_path = os.path.join(folder_path, file_name)
+
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
+    try:
+        with open(file_path, "w") as f:
+            chat = response.text
+            f.write(chat.rsplit("\n", 1)[0])
+        print(f"Soul: File '{file_name}' created successfully in '{folder_path}'")
+        print("Soul: Chat opening...")
+        os.startfile(f"D:/Shishir/Business/coding playground/SoulAI/{folder_path}/{file_name}")
+        say("Opening chat...")
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+
+def say(text):
+    engine = pyttsx3.init()
+    engine.say(text)
+    engine.runAndWait()
+
+if __name__ == '__main__':
+    print("Soul: Hi, I'm Soul A.I. By Shishir.code3k")
+    say("Hi, I'm Soul A.I. By Shishir.code3k")
+    say("What I do for you Sir?")
+
+    while True:
+        command = input("Soul: What I do for you Sir?\nUser: ")
+
+        sites = [["youtube", "https://www.youtube.com/"], ["wikipedia", "https://www.wikipedia.com/"],
+                 ["google", "https://www.google.com/"], ["discord", "https://discord.com/channels/@me/"],
+                 ["instagram", "https://www.instagram.com/"], ["thread", "https://www.threads.net/"],
+                 ["facebook", "https://www.facebook.com/"], ["twitter", "https://twitter.com/home?lang=en/"],
+                 ["pydoc", "https://docs.python.org/3/"], ["github", "https://github.com/Shishir3k/"],
+                 ["linkedin", "https://www.linkedin.com/feed/"], ["gmail", "https://mail.google.com/mail/u/1/#inbox/"],
+                 ["leetcode", "https://leetcode.com/problemset/"], ["w3school", "https://pathfinder.w3schools.com/"],
+                 ["pdfbook", "https://www.pdfdrive.com/"]]
+
+        for site in sites:
+            if f"Open {site[0]}".lower() in command.lower():
+                print(f"Soul: Opening {site[0].title()} sir.")
+                say(f"Opening {site[0]} sir...")
+                webbrowser.open(site[1])
+
+        applications = [["google chrome", "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Google Chrome.lnk"],
+                        ["vs code", "E:/Application/Visual Studio Code/Microsoft VS Code/Code.exe"],
+                        ["photoshop", "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Adobe Photoshop 2021.lnk"],
+                        ["illustrator", "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Adobe Illustrator 2021.lnk"],
+                        ["android studio", "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/Android Studio/Android Studio.lnk"],
+                        ["pycharm", "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/JetBrains/PyCharm Community Edition 2023.3.4.lnk"],
+                        ["intellij", "C:/ProgramData/Microsoft/Windows/Start Menu/Programs/JetBrains/IntelliJ IDEA Community Edition 2023.3.4.lnk"],]
+
+        for application in applications:
+            if f"Open {application[0]}".lower() in command.lower():
+                print(f"Soul: Opening {application[0].title()} sir.")
+                say(f"Opening {application[0]} sir...")
+                webbrowser.open(application[1])
+
+        if "the time".lower() in command.lower():
+                hour = datetime.datetime.now().strftime("%H")
+                min = datetime.datetime.now().strftime("%M")
+                print(f"Soul: Sir The time is {hour} and {min} minutes")
+                say(f"Sir The time is {hour} and {min} minutes")
+
+        elif "play music".lower() in command.lower():
+            path = "D:/Shishir/Other/Music/pehle-bhi-main-slowed-reverb-vishal-mishra-animal-sr-lofi.mp3"
+            os.startfile(path)
+            print("Soul: Playing Music")
+            say("Playing music")
+
+        elif "using ai".lower() in command.lower():
+            gemini(command)
+
+        elif "Quit".lower() in command.lower():
+            print("Soul: Thank you for using Soul A.I.")
+            say("Thank you for using Soul A.I.")
+            print("Soul: Power offing sir.")
+            say("Power offing sir")
+            break
+
+        else:
+            continue
