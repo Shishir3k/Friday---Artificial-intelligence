@@ -55,9 +55,9 @@ def gemini(command):
         with open(file_path, "w") as f:
             chat = response.text
             f.write(chat.rsplit("\n", 1)[0])
-        print(f"Soul: File '{file_name}' created successfully in '{folder_path}'")
-        print("Soul: Chat opening...")
-        os.startfile(f"D:/Shishir/Business/coding playground/SoulAI/{folder_path}/{file_name}")
+        print(f"Friday: File '{file_name}' created successfully in '{folder_path}'")
+        print("Friday: Chat opening...")
+        os.startfile(f"D:/Shishir/Business/coding playground/FridayAI/{folder_path}/{file_name}")
         say("Opening chat...")
 
     except Exception as e:
@@ -71,12 +71,12 @@ def say(text):
     engine.runAndWait()
 
 if __name__ == '__main__':
-    print("Soul: Hi, I'm Soul A.I. By Shishir.code3k")
-    say("Hi, I'm Soul A.I. By Shishir.code3k")
+    print("Friday: Hi, I'm Friday A.I. By Shishir.code3k")
+    say("Hi, I'm Friday A.I. By Shishir.code3k")
     say("What I do for you Sir?")
 
     while True:
-        command = input("Soul: What I do for you Sir?\nUser: ")
+        command = input("Friday: What I do for you Sir?\nUser: ")
 
         sites = [["youtube", "https://www.youtube.com/"], ["wikipedia", "https://www.wikipedia.com/"],
                  ["google", "https://www.google.com/"], ["discord", "https://discord.com/channels/@me/"],
@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
         for site in sites:
             if f"Open {site[0]}".lower() in command.lower():
-                print(f"Soul: Opening {site[0].title()} sir.")
+                print(f"Friday: Opening {site[0].title()} sir.")
                 say(f"Opening {site[0]} sir...")
                 webbrowser.open(site[1])
 
@@ -103,29 +103,29 @@ if __name__ == '__main__':
 
         for application in applications:
             if f"Open {application[0]}".lower() in command.lower():
-                print(f"Soul: Opening {application[0].title()} sir.")
+                print(f"Friday: Opening {application[0].title()} sir.")
                 say(f"Opening {application[0]} sir...")
                 webbrowser.open(application[1])
 
         if "the time".lower() in command.lower():
                 hour = datetime.datetime.now().strftime("%H")
                 min = datetime.datetime.now().strftime("%M")
-                print(f"Soul: Sir The time is {hour} and {min} minutes")
+                print(f"Friday: Sir The time is {hour} and {min} minutes")
                 say(f"Sir The time is {hour} and {min} minutes")
 
         elif "play music".lower() in command.lower():
             path = "D:/Shishir/Other/Music/pehle-bhi-main-slowed-reverb-vishal-mishra-animal-sr-lofi.mp3"
             os.startfile(path)
-            print("Soul: Playing Music")
+            print("Friday: Playing Music")
             say("Playing music")
 
         elif "using ai".lower() in command.lower():
             gemini(command)
 
         elif "Quit".lower() in command.lower():
-            print("Soul: Thank you for using Soul A.I.")
-            say("Thank you for using Soul A.I.")
-            print("Soul: Power offing sir.")
+            print("Friday: Thank you for using Friday A.I.")
+            say("Thank you for using Friday A.I.")
+            print("Friday: Power offing sir.")
             say("Power offing sir")
             break
 
